@@ -1,0 +1,73 @@
+
+*, *::before, *::after {
+  box-sizing: border-box;
+	border:0;
+	margin:0;
+	outline:0;
+	padding:0;
+  text-decoration: none;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  font-family: 'Alegreya', serif;
+}
+
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+input, button, textarea, select {
+  font: inherit;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+  font-family: 'Alegreya Sans', sans-serif;
+  font-weight: 700;
+
+}
+
+li {
+  list-style: none;
+  font-size: 18px;
+}
+
+p {
+  font-size: 18px;
+  font-family: 'Alegreya Sans', serif;
+
+}
+h1 {
+  font-size: 78px;
+}
+
+h2 {
+  font-size: 62px;
+}
+
+h3 {
+  font-size: 48px
+}
+
+h4 {
+  font-size: 33px;
+}
+
+h5 {
+  font-size: 24px;
+}
+
+h6 {
+  font-size: 18px;
+}
+
+small {
+  font-size: 0.85em;
+}
