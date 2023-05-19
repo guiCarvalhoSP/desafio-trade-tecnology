@@ -21,17 +21,17 @@ export class FootballService {
 
   constructor(private http: HttpClient) { }
 
-  listarPaises() {
+  async listarPaises() {
     return this.http.get<ICountry | IMessageApi>(`${this.url}/countries`, { headers: this.headers,});
   }
 
-  listarLigas(pais: string) {
+  async listarLigas(pais: string) {
     return this.http.get<ILeagues | IMessageApi>(
       `${this.url}/leagues?country=${pais}`, { headers: this.headers }
     );
   }
 
-  listarTimesDaLiga(ligaId: string, temporada?: number) {
+  async listarTimesDaLiga(ligaId: string, temporada?: number) {
     if (temporada) {
       return this.http.get<ITeams | IMessageApi>(
         `${this.url}/teams?league=${ligaId}&season=${temporada}`, { headers: this.headers }
@@ -42,13 +42,13 @@ export class FootballService {
     );
   }
 
-  listarEstatiticasDoTime(ligaId: string, temporada: number, timeId: string) {
+  async listarEstatiticasDoTime(ligaId: string, temporada: number, timeId: string) {
     return this.http.get<ITeamStatics | IMessageApi>(
       `${this.url}/teams/statistics?league=${ligaId}&season=${temporada}&team=${timeId}`, { headers: this.headers }
     );
   }
 
-  listarJogadoresDoTime(timeId: string, temporada: number) {
+  async listarJogadoresDoTime(timeId: string, temporada: number) {
     return this.http.get<IPlayers | IMessageApi>(
       `${this.url}/players?team=${timeId}&season=${temporada}`, { headers: this.headers }
     );

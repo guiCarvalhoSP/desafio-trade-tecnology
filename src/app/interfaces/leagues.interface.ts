@@ -9,14 +9,14 @@ export interface ILeagues extends IResponseApi {
   ];
 }
 
-interface ILeague {
+export interface ILeague {
   id: string | number;
   name: string;
   type: string;
   logo: string;
 }
 
-interface ISeason {
+export interface ISeason {
   year: number;
   start: string;
   end: string;

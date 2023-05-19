@@ -58,7 +58,7 @@ export interface ITeamStatics extends IResponseApi {
   ];
 }
 
-interface ITeam {
+export interface ITeam {
   id: number;
   name: string;
   code: string;
