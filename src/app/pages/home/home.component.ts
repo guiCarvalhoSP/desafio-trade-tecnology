@@ -20,25 +20,25 @@ export class HomeComponent {
   listaTemporada: string[] = [];
   estatisticasTime: ITeamStatics | any;
 
+  camposPreenchidos: boolean = false;
+
   constructor(
     private footballService: FootballService,
     formBuilder: FormBuilder
   ) {
-    this.obterListaDePaises();
-
     this.formulario = formBuilder.group({
       pais: ['#'],
-      temporada: ['#'],
-      liga: ['#'],
-      time: ['#'],
+      temporada: [{ value: '#', disabled: true }],
+      liga: [{ value: '#', disabled: true }],
+      time: [{ value: '#', disabled: true }],
     });
 
-    this.formulario.get('liga')?.disable;
-    this.formulario.get('temporada')?.disable;
-    this.formulario.get('time')?.disable;
+    this.obterListaDePaises();
   }
 
   async obterListaDePaises() {
+    this.camposPreenchidos = false;
+
     (await this.footballService.listarPaises()).subscribe({
       next: (paises) => {
         if (paises.constructor.name != 'IMessage') this.listaPaises = paises;
@@ -50,12 +50,13 @@ export class HomeComponent {
   }
 
   async obterListaDeLigas() {
+    this.camposPreenchidos = false;
+
     let pais = this.formulario.get('pais')?.value;
 
     if (pais != null && pais != '#') {
-      this.formulario.get('liga')?.enable;
-      this.formulario.get('temporada')?.disable;
-      this.formulario.get('time')?.disable;
+      this.habilitarCampos('liga');
+      this.desabilitarCampos('temporada', 'time');
 
       (await this.footballService.listarLigas(pais)).subscribe({
         next: (ligas) => {
@@ -71,9 +72,12 @@ export class HomeComponent {
   }
 
   async obterListaDeTimes() {
-    let temporada = this.formulario.get('temporada')?.value;
+    this.camposPreenchidos = false;
 
+    let temporada = this.formulario.get('temporada')?.value;
     let ligaId = this.formulario.get('liga')?.value;
+
+    this.habilitarCampos('time');
 
     if (temporada != null) {
       (
@@ -91,11 +95,9 @@ export class HomeComponent {
     }
   }
 
-  async obterEstatisticasTime() {
+  async onSubmit() {
     let timeId = this.formulario.get('time')?.value;
-
     let ligaId = this.formulario.get('liga')?.value;
-
     let temporada = this.formulario.get('temporada')?.value;
 
     (
@@ -114,11 +116,11 @@ export class HomeComponent {
         console.log(err);
       },
     });
-
-    console.log(this.estatisticasTime);
   }
 
   listarTemporadas() {
+    this.camposPreenchidos = false;
+
     let ligaId = this.formulario.get('liga')?.value;
 
     let ligas: ILeagues = this.listaLigas;
@@ -131,7 +133,15 @@ export class HomeComponent {
       this.listaTemporada = temporadas;
     }
 
-    this.formulario.get('temporada')?.enable;
-    this.formulario.get('time')?.disable;
+    this.habilitarCampos('temporada');
+    this.desabilitarCampos('time');
+  }
+
+  habilitarCampos(...campos: string[]) {
+    campos.forEach((campo) => this.formulario.get(campo)?.enable());
+  }
+
+  desabilitarCampos(...campos: string[]) {
+    campos.forEach((campo) => this.formulario.get(campo)?.disable());
   }
 }

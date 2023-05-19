@@ -1,10 +1,14 @@
-<div>
-  <form [formGroup]="formulario">
+<div class="container">
 
-    <div>
-      <label for="pais">Selecione o pais desejado</label>
+  <h1>Meu Time</h1>
+  <h3>Busque por informações a respeito de seu time:</h3>
+
+  <form [formGroup]="formulario" (ngSubmit)="onSubmit()" class="formulario">
+
+    <div class="input-container">
+      <label for="pais">Selecione o pais desejado:</label>
       <select formControlName="pais" id="pais" (change)="obterListaDeLigas()">
-        <option value="#" selected> Escolha um pais </option>
+        <option value="#" selected disabled> Escolha um pais </option>
 
         <option *ngFor="let pais of listaPaises?.response;" [value]="pais.name">
           {{ pais.name }}
@@ -13,10 +17,10 @@
     </div>
 
 
-    <div>
-      <label for="liga">Selecione a liga</label>
+    <div class="input-container">
+      <label for="liga">Selecione a liga:</label>
       <select formControlName="liga" id="liga" (change)="listarTemporadas()">
-        <option value="#" selected> Escolha uma liga </option>
+        <option value="#" selected disabled> Escolha uma liga </option>
 
         <ng-container *ngIf="listaLigas">
           <option *ngFor="let liga of listaLigas?.response;" [value]="liga.league.id">
@@ -26,10 +30,10 @@
       </select>
     </div>
 
-    <div>
-      <label for="temporada">Selecione uma temporada</label>
+    <div class="input-container">
+      <label for="temporada">Selecione uma temporada:</label>
       <select formControlName="temporada" id="temporada" (change)="obterListaDeTimes()">
-        <option value="#" selected> Escolha uma temporada da liga </option>
+        <option value="#" selected disabled> Escolha uma temporada da liga </option>
 
         <ng-container *ngIf="listaTemporada.length > 0">
           <option *ngFor="let temporada of listaTemporada;" [value]="temporada">
@@ -40,10 +44,10 @@
       </select>
     </div>
 
-    <div>
-      <label for="time">Selecione um time</label>
-      <select formControlName="time" id="time" (change)="obterEstatisticasTime()">
-        <option value="#" selected> Escolha um dos times participantes </option>
+    <div class="input-container">
+      <label for="time">Selecione um time:</label>
+      <select formControlName="time" id="time" (change)="camposPreenchidos = true">
+        <option value="#" selected disabled> Escolha um dos times participantes </option>
         <ng-container *ngIf="listaTimes">
           <option *ngFor="let time of listaTimes?.response;" [value]="time.team.id">
             {{ time.team.name }}
@@ -51,5 +55,7 @@
         </ng-container>
       </select>
     </div>
+
+    <button type="submit" class="botao" [disabled]="!camposPreenchidos">Pesquisar</button>
   </form>
 </div>

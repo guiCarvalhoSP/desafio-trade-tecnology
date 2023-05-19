@@ -4,9 +4,9 @@ import { environment } from 'src/environments/environment';
 
 import { ICountry } from '../interfaces/country.interface';
 import { ILeagues } from '../interfaces/leagues.interface';
-import { IMessageApi, IResponseApi } from '../interfaces/response.interface';
-import { ITeams, ITeamStatics } from '../interfaces/team.interfaces';
 import { IPlayers } from '../interfaces/player.interface';
+import { IMessageApi } from '../interfaces/response.interface';
+import { ITeams, ITeamStatics } from '../interfaces/team.interfaces';
 
 @Injectable({
   providedIn: 'root',

@@ -1,0 +1,65 @@
+@import 'styling';
+
+.container {
+  width: 100%;
+  min-height: 100vw;
+  padding: 100px 10vw;
+}
+
+h1 {
+  color: $black;
+}
+
+h3 {
+  color: $gray;
+}
+
+.formulario {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+
+  .input-container {
+    width: 200px;
+    margin: 20px 0px;
+    label {
+      font-weight: 700;
+      font-family: 'Alegreya Sans', sans-serif;
+      width: 100%;
+    }
+    
+    select {
+      width: 100%;
+      margin-top: 10px;
+      border: 1px solid $green;
+      border-radius: 5px;
+      padding: 5px;
+      cursor: pointer;
+
+      &:disabled {
+        border-color: $gray;
+        cursor: default;
+      }
+
+      option:disabled {
+        color: #7a7a7a;
+      }
+    }
+  }
+
+  .botao {
+    background-color: $orange;
+    color: $white;
+    border-radius: 5px;
+    transition: 0.2s ease;
+    padding: 10px 20px;
+    &:hover:not(:disabled) {
+      background-color: $brown;
+    }
+
+    &:disabled {
+      background-color: gray;
+    }
+  }
+}
