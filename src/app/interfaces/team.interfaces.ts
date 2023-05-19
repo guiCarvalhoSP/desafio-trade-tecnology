@@ -22,8 +22,8 @@ export interface ITeamStatics extends IResponseApi {
 
       team: {
         id: string | number;
-        name: 'Manchester United';
-        logo: 'https://media-2.api-sports.io/football/teams/33.png';
+        name: string;
+        logo: string;
       };
 
       form: string,
