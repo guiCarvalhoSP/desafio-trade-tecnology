@@ -1,4 +1,9 @@
 <div class="card">
+
+  <ng-template [ngIf]="isLoading">
+    <app-loading></app-loading>
+  </ng-template>
+
   <div class="nome-time">
     <img [src]="estatisticasTime.response.team.logo" alt="Logo do time">
     <div>

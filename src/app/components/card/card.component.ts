@@ -16,8 +16,8 @@ export class CardComponent implements OnInit {
   listaJogadores: IPlayers | any;
 
   formaMaisUtilizada: string = '';
-
   data: number[] = [];
+  isLoading: boolean = false;
 
   constructor(private footballService: FootballService) {}
 
@@ -47,6 +47,8 @@ export class CardComponent implements OnInit {
   }
 
   async buscaListaDeJogadores() {
+    this.isLoading = true;
+
     let timeId = this.estatisticasTime.response.team.id;
     let ligaId = this.estatisticasTime.response.league.id;
     let temporada = this.estatisticasTime.response.league.season;
@@ -62,6 +64,7 @@ export class CardComponent implements OnInit {
       error: (err) => {
         console.log(err);
       },
+      complete: () => this.isLoading = false
     });
   }
 

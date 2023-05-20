@@ -12,6 +12,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { HomeComponent } from './pages/home/home.component';
 import { CardComponent } from './components/card/card.component';
 import { GraficoComponent } from './components/grafico/grafico.component';
+import { LoadingComponent } from './components/loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { GraficoComponent } from './components/grafico/grafico.component';
     FooterComponent,
     HomeComponent,
     CardComponent,
-    GraficoComponent
+    GraficoComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,

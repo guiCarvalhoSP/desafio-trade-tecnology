@@ -3,6 +3,10 @@
   <h1>Meu Time</h1>
   <h3>Busque por informações a respeito de seu time:</h3>
 
+  <ng-template [ngIf]="isLoading">
+    <app-loading></app-loading>
+  </ng-template>
+  
   <form [formGroup]="formulario" (ngSubmit)="onSubmit()" class="formulario">
 
     <div class="input-container">

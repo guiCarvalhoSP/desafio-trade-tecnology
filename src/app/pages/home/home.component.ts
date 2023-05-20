@@ -21,6 +21,7 @@ export class HomeComponent {
   estatisticasTime: ITeamStatics | any;
 
   camposPreenchidos: boolean = false;
+  isLoading: boolean = false;
 
   constructor(
     private footballService: FootballService,
@@ -38,7 +39,7 @@ export class HomeComponent {
 
   async obterListaDePaises() {
     this.camposPreenchidos = false;
-
+    this.isLoading = true;
     (await this.footballService.listarPaises()).subscribe({
       next: (paises) => {
         if (paises.constructor.name != 'IMessage') this.listaPaises = paises;
@@ -46,38 +47,40 @@ export class HomeComponent {
       error: (err) => {
         console.log(err);
       },
+      complete: () => this.isLoading = false
     });
   }
 
   async obterListaDeLigas() {
     this.camposPreenchidos = false;
+    this.isLoading = true;
 
     let pais = this.formulario.get('pais')?.value;
 
     if (pais != null && pais != '#') {
-      this.habilitarCampos('liga');
       this.desabilitarCampos('temporada', 'time');
-
+      this.isLoading = true;
       (await this.footballService.listarLigas(pais)).subscribe({
         next: (ligas) => {
           if (ligas.constructor.name != 'IMessage') {
+            this.habilitarCampos('liga');
             this.listaLigas = ligas;
           }
         },
         error: (err) => {
           console.log(err);
         },
+        complete: () => this.isLoading = false
       });
     }
   }
 
   async obterListaDeTimes() {
     this.camposPreenchidos = false;
+    this.isLoading = true;
 
     let temporada = this.formulario.get('temporada')?.value;
     let ligaId = this.formulario.get('liga')?.value;
-
-    this.habilitarCampos('time');
 
     if (temporada != null) {
       (
@@ -85,17 +88,21 @@ export class HomeComponent {
       ).subscribe({
         next: (times) => {
           if (times.constructor.name != 'IMessage') {
+            this.habilitarCampos('time');
             this.listaTimes = times;
           }
         },
         error: (err) => {
           console.log(err);
         },
+        complete: () => this.isLoading = false
       });
     }
   }
 
   async onSubmit() {
+    this.isLoading = true;
+
     let timeId = this.formulario.get('time')?.value;
     let ligaId = this.formulario.get('liga')?.value;
     let temporada = this.formulario.get('temporada')?.value;
@@ -115,6 +122,7 @@ export class HomeComponent {
       error: (err) => {
         console.log("Erro inesperado" + err);
       },
+      complete: () => this.isLoading = false
     });
   }
 
@@ -122,7 +130,6 @@ export class HomeComponent {
     this.camposPreenchidos = false;
 
     let ligaId = this.formulario.get('liga')?.value;
-
     let ligas: ILeagues = this.listaLigas;
 
     let temporadas = ligas.response
