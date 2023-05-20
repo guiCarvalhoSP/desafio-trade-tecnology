@@ -22,7 +22,7 @@
 
   <div class="informacoes">
     <div class="grafico" *ngIf="estatisticasTime">
-      <h5>Gols por periodo de jogo</h5>
+      <h5>Total de gols: {{ estatisticasTime.response.goals.for.total?.total }}</h5>
       <app-grafico
         [labels]="['0-15', '16-30', '31-45', '46-60', '61-75', '76-90', '91-105', '106-120']"
         [dataGraf]="data"

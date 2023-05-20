@@ -16,7 +16,7 @@ export class GraficoComponent implements OnInit{
   public barChartData: ChartConfiguration<'bar'>['data'] = {
     labels: [],
     datasets: [
-      { data: [], label: 'Gols por periodo de tempo'},
+      { data: [], label: 'Gols por periodo do jogo'},
     ]
   };
 
