@@ -113,7 +113,7 @@ export class HomeComponent {
         }
       },
       error: (err) => {
-        console.log(err);
+        console.log("Erro inesperado" + err);
       },
     });
   }

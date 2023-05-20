@@ -48,9 +48,9 @@ export class FootballService {
     );
   }
 
-  async listarJogadoresDoTime(timeId: string, temporada: number) {
+  async listarJogadoresDoTime(timeId: string | number, ligaId: string | number, temporada: number) {
     return this.http.get<IPlayers | IMessageApi>(
-      `${this.url}/players?team=${timeId}&season=${temporada}`, { headers: this.headers }
+      `${this.url}/players?team=${timeId}&season=${temporada}&league=${ligaId}`, { headers: this.headers }
     );
 
   }

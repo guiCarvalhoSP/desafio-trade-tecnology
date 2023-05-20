@@ -58,4 +58,8 @@
 
     <button type="submit" class="botao" [disabled]="!camposPreenchidos">Pesquisar</button>
   </form>
+
+  <ng-template [ngIf]="estatisticasTime">
+    <app-card [estatisticasTime]="estatisticasTime"></app-card>
+  </ng-template>
 </div>
