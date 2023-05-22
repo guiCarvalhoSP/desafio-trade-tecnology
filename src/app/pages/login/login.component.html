@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="login">
+    <h5>Faça login para ver informações sobre seu time</h5>
+    <p>Para acessar a aplicação, crie uma conta na <a href="https://dashboard.api-football.com/register"
+        target="_blank">API-Football</a>, e utilize a sua key para realizar login</p>
+  
+    
+    <form (ngSubmit)="onSubmit()">
+
+      <div class="campo">
+        <label for="">Key</label>
+        <input [type]="showPassword ? 'text' : 'password'" placeholder="Digite sua key">
+        <button class="showButton"
+          (mouseover)="showPassword = true"
+          (mouseout)="showPassword = false"
+          type="button"
+        >
+          Mostrar
+        </button>
+        <figcaption class="error-message"  *ngIf="hasError">Key inválida, tente novamente!</figcaption >
+      </div>
+
+      <button type="submit" class="submitButton">Entrar</button>
+    </form>
+  </div>
+</div>

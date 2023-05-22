@@ -1,0 +1,81 @@
+@import 'styling';
+
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+.login {
+  width: 60vw;
+  min-width: 340px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px $black;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 30px;
+  form {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .campo {
+      label {
+        display: block;
+        font-size: 18px;
+        font-family: "Alegrya sans", sans-serif;
+      }
+
+      input {
+        width: 280px;
+        height: 30px;
+        border: 2px solid $gray;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+        background-color: $white;
+        border-right:none;
+        &:focus {
+          background-color: #d6d6d6;
+        }
+      }
+
+      .showButton {
+        padding: 0px 10px;
+        height: 30px;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        border: 2px solid $gray;
+        border-left: 1px solid $gray;
+        background-color: $light-green;
+        color: $black;
+        cursor: pointer;
+        &:hover {
+          background-color: $green;
+        }
+      }
+      
+    }
+
+    .submitButton {
+      background-color: $blue;
+      color: $white;
+      width: 130px;
+      padding: 10px 20px;
+      font-size: 20px;
+      font-weight: 700;
+      text-transform: uppercase;
+      border-radius: 10px;
+      margin-top: 30px;
+      cursor: pointer;
+      transition: ease 0.2s;
+
+      &:hover {
+        background-color: #4955c4 ;
+      }
+    }
+  }
+}
+
+.error-message {
+  color: red;
+}
