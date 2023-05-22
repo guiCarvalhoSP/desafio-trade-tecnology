@@ -1,0 +1,68 @@
+<div class="card">
+
+  <ng-template [ngIf]="isLoading">
+    <app-loading></app-loading>
+  </ng-template>
+
+  <div class="nome-time">
+    <img [src]="estatisticasTime.response.team.logo" alt="Logo do time">
+    <div>
+      <h2> {{ estatisticasTime.response.team.name }}</h2>
+      <div class="liga">
+        <p><strong>Liga: </strong> {{ estatisticasTime.response.league.name }} </p>
+        <p><strong>Temporada: </strong> {{ estatisticasTime.response.league.season }} </p>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="lista-jogos">
+    <ul>
+      <li><strong>Jogos totais: </strong> {{ estatisticasTime.response.fixtures.played.total }}</li>
+      <li><strong>Total de vitórias: </strong> {{ estatisticasTime.response.fixtures.wins.total }}</li>
+      <li><strong>Total de empates: </strong> {{ estatisticasTime.response.fixtures.draws.total }}</li>
+      <li><strong>Total de derrotas: </strong> {{ estatisticasTime.response.fixtures.loses.total }}</li>
+    </ul>
+  </div>
+
+  <div class="informacoes">
+    <div class="grafico" *ngIf="estatisticasTime">
+      <h5>Total de gols: {{ estatisticasTime.response.goals.for.total?.total }}</h5>
+      <app-grafico
+        [labels]="['0-15', '16-30', '31-45', '46-60', '61-75', '76-90', '91-105', '106-120']"
+        [dataGraf]="data"
+        >
+      </app-grafico>
+    </div>
+
+    <div class="formacao">
+      <h5>Formação mais utilizada: </h5>
+      <h6>{{ formaMaisUtilizada }}</h6>
+    </div>
+
+
+  </div>
+
+  <div>
+    <h5>Lista de jogadores:</h5>
+
+    <table class="tabela-jogadores">
+      <thead>
+          <tr>
+              <th class="jogador">Jogador</th>
+              <th class="idade">Idade</th>
+              <th class="nacionalidade">Nacionalidade</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let jogador of listaJogadores?.response">
+              <td>{{ jogador.player.firstname }}</td>
+              <td>{{ jogador.player.age }}</td>
+              <td>{{ jogador.player.nationality }}</td>
+          </tr>
+
+      </tbody>
+  </table>
+
+  </div>
+</div>

@@ -1,0 +1,69 @@
+<div class="container">
+
+  <h1>Meu Time</h1>
+  <h3>Busque por informações a respeito de seu time:</h3>
+
+  <ng-template [ngIf]="isLoading">
+    <app-loading></app-loading>
+  </ng-template>
+  
+  <form [formGroup]="formulario" (ngSubmit)="onSubmit()" class="formulario">
+
+    <div class="input-container">
+      <label for="pais">Selecione o pais desejado:</label>
+      <select formControlName="pais" id="pais" (change)="obterListaDeLigas()">
+        <option value="#" selected disabled> Escolha um pais </option>
+
+        <option *ngFor="let pais of listaPaises?.response;" [value]="pais.name">
+          {{ pais.name }}
+        </option>
+      </select>
+    </div>
+
+
+    <div class="input-container">
+      <label for="liga">Selecione a liga:</label>
+      <select formControlName="liga" id="liga" (change)="listarTemporadas()">
+        <option value="#" selected disabled> Escolha uma liga </option>
+
+        <ng-container *ngIf="listaLigas">
+          <option *ngFor="let liga of listaLigas?.response;" [value]="liga.league.id">
+            {{ liga.league.name }}
+          </option>
+        </ng-container>
+      </select>
+    </div>
+
+    <div class="input-container">
+      <label for="temporada">Selecione uma temporada:</label>
+      <select formControlName="temporada" id="temporada" (change)="obterListaDeTimes()">
+        <option value="#" selected disabled> Escolha uma temporada da liga </option>
+
+        <ng-container *ngIf="listaTemporada.length > 0">
+          <option *ngFor="let temporada of listaTemporada;" [value]="temporada">
+            {{ temporada }}
+          </option>
+        </ng-container>
+
+      </select>
+    </div>
+
+    <div class="input-container">
+      <label for="time">Selecione um time:</label>
+      <select formControlName="time" id="time" (change)="camposPreenchidos = true">
+        <option value="#" selected disabled> Escolha um dos times participantes </option>
+        <ng-container *ngIf="listaTimes">
+          <option *ngFor="let time of listaTimes?.response;" [value]="time.team.id">
+            {{ time.team.name }}
+          </option>
+        </ng-container>
+      </select>
+    </div>
+
+    <button type="submit" class="botao" [disabled]="!camposPreenchidos">Pesquisar</button>
+  </form>
+
+  <ng-template [ngIf]="estatisticasTime">
+    <app-card [estatisticasTime]="estatisticasTime"></app-card>
+  </ng-template>
+</div>
