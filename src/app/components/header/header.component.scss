@@ -7,10 +7,12 @@
   justify-content: space-between;
   padding: 10px 30px;
   background-color: $green;
+  color: $white;
 
   a {
     color: $white;
     transition: ease 0.1s;
+    cursor: pointer;
     &:hover {
       color: $orange;
     }
