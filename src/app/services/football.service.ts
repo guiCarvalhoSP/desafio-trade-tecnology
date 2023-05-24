@@ -7,19 +7,25 @@ import { ILeagues } from '../interfaces/leagues.interface';
 import { IPlayers } from '../interfaces/player.interface';
 import { IMessageApi } from '../interfaces/response.interface';
 import { ITeams, ITeamStatics } from '../interfaces/team.interfaces';
+import { LocalStorageService } from './local-storage.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FootballService {
   readonly url: string = environment.apiUrl;
-  // Will be change after te creation of authentication
-  readonly key: string = environment.key;
-  readonly headers = new HttpHeaders()
-    .set('x-rapidapi-host', 'v3.football.api-sports.io')
-    .set('x-rapidapi-key', this.key);
+  readonly key: string | null;
+  readonly headers: any;
+  readonly parametroKey: string =  environment.key;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private storageService: LocalStorageService) { 
+    this.key  = this.storageService.obterValor(this.parametroKey);
+    if(this.key) {
+      this.headers  = new HttpHeaders()
+      .set('x-rapidapi-host', 'v3.football.api-sports.io')
+      .set('x-rapidapi-key', this.key);
+    }
+  }
 
   async listarPaises() {
     return this.http.get<ICountry | IMessageApi>(`${this.url}/countries`, { headers: this.headers,});
@@ -52,6 +58,17 @@ export class FootballService {
     return this.http.get<IPlayers | IMessageApi>(
       `${this.url}/players?team=${timeId}&season=${temporada}&league=${ligaId}`, { headers: this.headers }
     );
+  }
 
+  listarTemporadas(ligas: ILeagues, ligaId: string): string[] {
+    let temporadas = ligas.response
+      .find((liga) => liga.league.id == ligaId)
+      ?.seasons.map((season) => season.year.toString());
+
+    if (temporadas) {
+      return temporadas;
+    }
+
+    return []
   }
 }

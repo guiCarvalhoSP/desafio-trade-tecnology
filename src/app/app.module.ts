@@ -13,6 +13,8 @@ import { HomeComponent } from './pages/home/home.component';
 import { CardComponent } from './components/card/card.component';
 import { GraficoComponent } from './components/grafico/grafico.component';
 import { LoadingComponent } from './components/loading/loading.component';
+import { LoginComponent } from './pages/login/login.component';
+import { MessageComponent } from './components/message/message.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { LoadingComponent } from './components/loading/loading.component';
     HomeComponent,
     CardComponent,
     GraficoComponent,
-    LoadingComponent
+    LoadingComponent,
+    LoginComponent,
+    MessageComponent
   ],
   imports: [
     BrowserModule,

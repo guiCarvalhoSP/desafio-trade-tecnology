@@ -1,0 +1,19 @@
+.message.show {
+  display: block;
+  width: 340px;
+  background-color: #fff6cb;
+  color: #8d7604;
+  border: 2px solid #f8d009;
+  border-radius: 10px;
+  padding: 10px;
+  position: fixed;
+  z-index: 100;
+  top: 85px;
+  left: 50%;
+
+  transform: translate(-50%);
+}
+
+.message.no-show {
+  display: none;
+}
