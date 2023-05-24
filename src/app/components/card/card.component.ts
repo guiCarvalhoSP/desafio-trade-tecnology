@@ -25,14 +25,12 @@ export class CardComponent implements OnInit {
     this.buscaListaDeJogadores();
     this.verificaFormacaoUtilizada();
     this.data = this.obterDadosParaGrafico();
-    console.log('Rodou onInit');
   }
 
   ngOnChanges(): void  {
     this.buscaListaDeJogadores();
     this.data = this.obterDadosParaGrafico();
 
-    console.log('Rodou onChange');
   }
 
   verificaFormacaoUtilizada() {

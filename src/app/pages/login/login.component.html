@@ -5,11 +5,11 @@
         target="_blank">API-Football</a>, e utilize a sua key para realizar login</p>
   
     
-    <form (ngSubmit)="onSubmit()">
+    <form (ngSubmit)="onSubmit()" [formGroup]="formulario">
 
       <div class="campo">
-        <label for="">Key</label>
-        <input [type]="showPassword ? 'text' : 'password'" placeholder="Digite sua key">
+        <label for="key" [ngClass]="{'error-message': key.invalid || hasError}">* Key</label>
+        <input [type]="showPassword ? 'text' : 'password'" placeholder="Digite sua key" formControlName="key" id="key">
         <button class="showButton"
           (mouseover)="showPassword = true"
           (mouseout)="showPassword = false"
@@ -17,10 +17,13 @@
         >
           Mostrar
         </button>
-        <figcaption class="error-message"  *ngIf="hasError">Key inválida, tente novamente!</figcaption >
+        <figcaption class="error-message" *ngIf="key.invalid">O preenchimento da key é obrigatório!</figcaption >
+        <figcaption class="error-message" *ngIf="hasError">Key inválida, tente novamente!</figcaption >
       </div>
 
-      <button type="submit" class="submitButton">Entrar</button>
+      <ng-template [ngIf]="isLoading">
+        <app-loading></app-loading>
+      </ng-template>      <button type="submit" class="submitButton" [disabled]="key.invalid || isLoading">Entrar</button>
     </form>
   </div>
 </div>

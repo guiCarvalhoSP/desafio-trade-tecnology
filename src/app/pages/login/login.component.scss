@@ -69,8 +69,17 @@
       cursor: pointer;
       transition: ease 0.2s;
 
+      &:disabled {
+        background-color: $gray;
+        cursor: default;
+      }
       &:hover {
         background-color: #4955c4 ;
+      }
+
+      &:disabled, &:disabled:hover {
+        background-color: $gray;
+        cursor: default;
       }
     }
   }

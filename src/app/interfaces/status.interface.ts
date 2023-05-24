@@ -1,7 +1,7 @@
 import { IResponseApi } from './response.interface';
 
 export interface IStatusResponse extends IResponseApi {
-  response: {
+  response?: {
     account: {
       firstname: string;
       lastname: string;
