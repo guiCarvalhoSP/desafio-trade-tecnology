@@ -58,6 +58,17 @@ export class FootballService {
     return this.http.get<IPlayers | IMessageApi>(
       `${this.url}/players?team=${timeId}&season=${temporada}&league=${ligaId}`, { headers: this.headers }
     );
+  }
 
+  listarTemporadas(ligas: ILeagues, ligaId: string): string[] {
+    let temporadas = ligas.response
+      .find((liga) => liga.league.id == ligaId)
+      ?.seasons.map((season) => season.year.toString());
+
+    if (temporadas) {
+      return temporadas;
+    }
+
+    return []
   }
 }

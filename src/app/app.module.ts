@@ -14,6 +14,7 @@ import { CardComponent } from './components/card/card.component';
 import { GraficoComponent } from './components/grafico/grafico.component';
 import { LoadingComponent } from './components/loading/loading.component';
 import { LoginComponent } from './pages/login/login.component';
+import { MessageComponent } from './components/message/message.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { LoginComponent } from './pages/login/login.component';
     CardComponent,
     GraficoComponent,
     LoadingComponent,
-    LoginComponent
+    LoginComponent,
+    MessageComponent
   ],
   imports: [
     BrowserModule,

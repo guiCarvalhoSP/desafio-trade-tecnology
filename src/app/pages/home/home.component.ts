@@ -22,6 +22,7 @@ export class HomeComponent {
 
   camposPreenchidos: boolean = false;
   isLoading: boolean = false;
+  msg: string = '';
 
   constructor(
     private footballService: FootballService,
@@ -43,11 +44,13 @@ export class HomeComponent {
     (await this.footballService.listarPaises()).subscribe({
       next: (paises) => {
         if (paises.constructor.name != 'IMessage') this.listaPaises = paises;
+        else this.msg = 'Erro na API Football. Tente novamente mais tarde!';
       },
       error: (err) => {
         console.log(err);
+        this.msg = 'Erro na aplicação. Tente novamente mais tarde!';
       },
-      complete: () => this.isLoading = false
+      complete: () => (this.isLoading = false),
     });
   }
 
@@ -65,12 +68,13 @@ export class HomeComponent {
           if (ligas.constructor.name != 'IMessage') {
             this.habilitarCampos('liga');
             this.listaLigas = ligas;
-          }
+          } else this.msg = 'Erro na API Football. Tente novamente mais tarde!';
         },
         error: (err) => {
           console.log(err);
+          this.msg = 'Erro na aplicação. Tente novamente mais tarde!';
         },
-        complete: () => this.isLoading = false
+        complete: () => (this.isLoading = false),
       });
     }
   }
@@ -90,12 +94,13 @@ export class HomeComponent {
           if (times.constructor.name != 'IMessage') {
             this.habilitarCampos('time');
             this.listaTimes = times;
-          }
+          } else this.msg = 'Erro na API Football. Tente novamente mais tarde!';
         },
         error: (err) => {
           console.log(err);
+          this.msg = 'Erro na aplicação. Tente novamente mais tarde!';
         },
-        complete: () => this.isLoading = false
+        complete: () => (this.isLoading = false),
       });
     }
   }
@@ -117,12 +122,13 @@ export class HomeComponent {
       next: (time) => {
         if (time.constructor.name != 'IMessage') {
           this.estatisticasTime = time;
-        }
+        } else this.msg = 'Erro na API Football. Tente novamente mais tarde!';
       },
       error: (err) => {
-        console.log("Erro inesperado" + err);
+        console.log(err);
+        this.msg = 'Erro na aplicação. Tente novamente mais tarde!';
       },
-      complete: () => this.isLoading = false
+      complete: () => (this.isLoading = false),
     });
   }
 
@@ -132,13 +138,7 @@ export class HomeComponent {
     let ligaId = this.formulario.get('liga')?.value;
     let ligas: ILeagues = this.listaLigas;
 
-    let temporadas = ligas.response
-      .find((liga) => liga.league.id == ligaId)
-      ?.seasons.map((season) => season.year.toString());
-
-    if (temporadas) {
-      this.listaTemporada = temporadas;
-    }
+    this.listaTemporada = this.footballService.listarTemporadas(ligas, ligaId);
 
     this.habilitarCampos('temporada');
     this.desabilitarCampos('time');

@@ -1,4 +1,7 @@
 <div class="container">
+
+  <app-message  *ngIf="msg" [message]="msg"></app-message>
+
   <div class="login">
     <h5>Faça login para ver informações sobre seu time</h5>
     <p>Para acessar a aplicação, crie uma conta na <a href="https://dashboard.api-football.com/register"

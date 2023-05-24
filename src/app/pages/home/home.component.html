@@ -2,6 +2,8 @@
 
   <h1>Meu Time</h1>
   <h3>Busque por informações a respeito de seu time:</h3>
+  
+  <app-message  *ngIf="msg" [message]="msg"></app-message>
 
   <ng-template [ngIf]="isLoading">
     <app-loading></app-loading>

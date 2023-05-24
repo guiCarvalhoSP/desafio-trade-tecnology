@@ -9,10 +9,12 @@ import { LoginService } from 'src/app/services/login.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnDestroy{
+
   showPassword: boolean = false;
   hasError: boolean = false;
   formulario: FormGroup | any;
   isLoading: boolean = false;
+  msg: string = '';
 
   event = new EventEmitter<boolean>(true);
 
@@ -36,7 +38,10 @@ export class LoginComponent implements OnDestroy{
           this.isLoading = false;
         }
       },
-      (err) => console.log(err)
+      (err) => {
+        console.log(err);
+        this.msg = 'Erro ao fazer login. Tente novamente mais tarde.'
+      }
     );
   }
   
