@@ -3,6 +3,7 @@
 .container {
   display: flex;
   justify-content: center;
+  min-height: 70vh;
 }
 
 .login {
@@ -14,7 +15,7 @@
   align-items: center;
   flex-direction: column;
   padding: 30px;
-
+  max-height: 410px;
   form {
     margin-top: 30px;
     display: flex;

@@ -16,6 +16,7 @@ body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   font-family: 'Alegreya', serif;
+  background-color: #995721;
 }
 
 img, picture, video, canvas, svg {
@@ -74,7 +75,6 @@ small {
 
 .container {
   width: 100%;
-  min-height: 80vh;
   padding: 100px 10vw;
   background-color: $white;
 }
