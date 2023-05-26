@@ -13,17 +13,15 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 describe('LoginService', () => {
   let service: LoginService;
   let router: Router;
+  let localStorageservice: LocalStorageService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-        RouterTestingModule
-      ],
-
+      imports: [HttpClientTestingModule, RouterTestingModule],
     });
     service = TestBed.inject(LoginService);
     router = TestBed.inject(Router);
+    localStorageservice = TestBed.inject(LocalStorageService);
   });
 
   it('should be created', () => {
@@ -31,7 +29,6 @@ describe('LoginService', () => {
   });
 
   it('Deve retornar a key se estiver logado', () => {
-    const localStorageservice = TestBed.inject(LocalStorageService);
     spyOn(localStorageservice, 'obterValor').and.returnValue('valor-key');
     let key = service.estaLogado();
 
@@ -39,8 +36,6 @@ describe('LoginService', () => {
   });
 
   it('Deve realizar o logout do usuário e retirar a key do local storage', () => {
-    const localStorageservice = TestBed.inject(LocalStorageService);
-
     let spied = spyOn(localStorageservice, 'removerValor').and.callThrough();
     service.logout();
 
@@ -48,7 +43,6 @@ describe('LoginService', () => {
   });
 
   it('Deve realizar o login de usuário e salvar a key do local storage se válido, e redirecionar para home', () => {
-
     let response: IStatusResponse = {
       get: '',
       parameters: undefined,
@@ -56,26 +50,27 @@ describe('LoginService', () => {
       results: 0,
       paging: {
         current: undefined,
-        total: undefined
+        total: undefined,
       },
       response: {
         subscription: {
           plan: 'string',
           end: 'string',
           active: true,
-        }
-      }
-    }
+        },
+      },
+    };
 
     let emmiter = new EventEmitter<boolean>();
     let spiedEmmiter = spyOn(emmiter, 'emit');
 
-    const localStorageservice = TestBed.inject(LocalStorageService);
-
-    let spiedLocalStorage = spyOn(localStorageservice, 'setarValor').and.callThrough();
+    let spiedLocalStorage = spyOn(
+      localStorageservice,
+      'setarValor'
+    ).and.callThrough();
     spyOn(service, 'verificaStatus').and.returnValue(of(response));
     let spiedRouter = spyOn(router, 'navigate');
-    
+
     service.login('key', emmiter);
 
     expect(spiedLocalStorage).toHaveBeenCalledWith('api-key', 'key');
@@ -84,29 +79,27 @@ describe('LoginService', () => {
   });
 
   it('Deve emitir um falso para caso tenha algum erro no retorno da requisição e não deve salvar nenhuma key', () => {
-
     let response: IStatusResponse = {
       get: '',
       parameters: undefined,
-      errors: [{erro: 'erro'}],
+      errors: [{ erro: 'erro' }],
       results: 0,
       paging: {
         current: undefined,
-        total: undefined
-      }
-    }
+        total: undefined,
+      },
+    };
 
     let emmiter = new EventEmitter<boolean>();
     let spiedEmmiter = spyOn(emmiter, 'emit');
 
-    const localStorageservice = TestBed.inject(LocalStorageService);
-
-    let spiedLocalStorage = spyOn(localStorageservice, 'setarValor').and.callThrough().calls.count();
+    let spiedLocalStorage = spyOn(localStorageservice, 'setarValor')
+      .and.callThrough()
+      .calls.count();
     spyOn(service, 'verificaStatus').and.returnValue(of(response));
     let spiedRouter = spyOn(router, 'navigate').calls.count();
-    
-    service.login('key', emmiter);
 
+    service.login('key', emmiter);
 
     expect(spiedLocalStorage).toBe(0);
     expect(spiedRouter).toBe(0);
@@ -114,36 +107,34 @@ describe('LoginService', () => {
   });
 
   it('Deve emitir um falso para caso a key passada não esteja ativa', () => {
-
     let response: IStatusResponse = {
       get: '',
       parameters: undefined,
-      errors: [{erro: 'erro'}],
+      errors: [{ erro: 'erro' }],
       results: 0,
       paging: {
         current: undefined,
-        total: undefined
+        total: undefined,
       },
       response: {
         subscription: {
           plan: 'string',
           end: 'string',
           active: false,
-        }
-      }
-    }
+        },
+      },
+    };
 
     let emmiter = new EventEmitter<boolean>();
     let spiedEmmiter = spyOn(emmiter, 'emit');
 
-    const localStorageservice = TestBed.inject(LocalStorageService);
-
-    let spiedLocalStorage = spyOn(localStorageservice, 'setarValor').and.callThrough().calls.count();
+    let spiedLocalStorage = spyOn(localStorageservice, 'setarValor')
+      .and.callThrough()
+      .calls.count();
     spyOn(service, 'verificaStatus').and.returnValue(of(response));
     let spiedRouter = spyOn(router, 'navigate').calls.count();
-    
-    service.login('key', emmiter);
 
+    service.login('key', emmiter);
 
     expect(spiedLocalStorage).toBe(0);
     expect(spiedRouter).toBe(0);
@@ -151,7 +142,6 @@ describe('LoginService', () => {
   });
 
   it('Deve fazer requisição para verificar se o status da key está ativo', () => {
-
     let http: HttpClient = TestBed.inject(HttpClient);
     let spied = spyOn(http, 'get');
 
@@ -160,6 +150,9 @@ describe('LoginService', () => {
       .set('x-rapidapi-key', 'key');
 
     service.verificaStatus('key');
-    expect(spied).toHaveBeenCalledWith('https://v3.football.api-sports.io/status', {headers});
+    expect(spied).toHaveBeenCalledWith(
+      'https://v3.football.api-sports.io/status',
+      { headers }
+    );
   });
 });
