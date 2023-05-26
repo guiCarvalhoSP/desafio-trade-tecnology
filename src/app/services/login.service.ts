@@ -19,10 +19,10 @@ export class LoginService {
     private router: Router,
   ) {}
 
-  async login(key: string, event: EventEmitter<boolean>) {
-    (await this.verificaStatus(key)).subscribe({
+   login(key: string, event: EventEmitter<boolean>) {
+    this.verificaStatus(key).subscribe({
       next: (res) => {
-        if (res.errors.token) {
+        if (res.errors?.token) {
           event.emit(false);
         } else {
           event.emit(this.salvarKey(res, key));
@@ -45,6 +45,16 @@ export class LoginService {
     console.log('Logout efetuado.');
   }
 
+  verificaStatus(key: string) {
+    let headers = new HttpHeaders()
+      .set('x-rapidapi-host', 'v3.football.api-sports.io')
+      .set('x-rapidapi-key', String(key));
+    return this.http.get<IStatusResponse>(`${this.url}/status`, {
+      headers: headers,
+    });
+
+  }
+
   private salvarKey(status: IStatusResponse, key: string): boolean {
       if (status.response?.subscription.active) {
         this.storageService.setarValor(this.parametroKey, key);
@@ -56,12 +66,4 @@ export class LoginService {
       }
   }
 
-  private async verificaStatus(key: string) {
-    let headers = new HttpHeaders()
-      .set('x-rapidapi-host', 'v3.football.api-sports.io')
-      .set('x-rapidapi-key', String(key));
-    return this.http.get<IStatusResponse>(`${this.url}/status`, {
-      headers: headers,
-    });
-  }
 }

@@ -27,21 +27,22 @@ export class CardComponent implements OnInit {
     this.data = this.obterDadosParaGrafico();
   }
 
-  ngOnChanges(): void  {
+  ngOnChanges(): void {
     this.buscaListaDeJogadores();
     this.data = this.obterDadosParaGrafico();
-
   }
 
   verificaFormacaoUtilizada() {
     let qtd: number = 0;
 
-    this.estatisticasTime.response.lineups.forEach((formacao: { played: number; formation: string; }) => {
-      if (formacao.played > qtd) {
-        qtd = formacao.played;
-        this.formaMaisUtilizada = formacao.formation;
+    this.estatisticasTime.response.lineups.forEach(
+      (formacao: { played: number; formation: string }) => {
+        if (formacao.played > qtd) {
+          qtd = formacao.played;
+          this.formaMaisUtilizada = formacao.formation;
+        }
       }
-    });
+    );
   }
 
   async buscaListaDeJogadores() {
@@ -51,31 +52,32 @@ export class CardComponent implements OnInit {
     let ligaId = this.estatisticasTime.response.league.id;
     let temporada = this.estatisticasTime.response.league.season;
 
-    (
-      await this.footballService.listarJogadoresDoTime(timeId, ligaId, temporada)
-    ).subscribe({
-      next: (jogadores) => {
-        if (jogadores.constructor.name != 'IMessage') {
-          this.listaJogadores = jogadores;
-        }
-      },
-      error: (err) => {
-        console.log(err);
-      },
-      complete: () => this.isLoading = false
-    });
+    this.footballService
+      .listarJogadoresDoTime(timeId, ligaId, temporada)
+      .subscribe({
+        next: (jogadores) => {
+          if (jogadores.constructor.name != 'IMessage') {
+            this.listaJogadores = jogadores;
+          }
+        },
+        error: (err) => {
+          console.log(err);
+        },
+        complete: () => (this.isLoading = false),
+      });
   }
 
   obterDadosParaGrafico() {
     let data: number[] = [];
 
-    let golsArr = Object.values(this.estatisticasTime.response.goals.for.minute);
+    let golsArr = Object.values(
+      this.estatisticasTime.response.goals.for.minute
+    );
 
     golsArr.forEach((gols: any) => {
-      if(gols.total) {
+      if (gols.total) {
         data.push(gols.total);
-      }
-      else {
+      } else {
         data.push(0);
       }
     });

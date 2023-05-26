@@ -38,10 +38,10 @@ export class HomeComponent {
     this.obterListaDePaises();
   }
 
-  async obterListaDePaises() {
+  obterListaDePaises() {
     this.camposPreenchidos = false;
     this.isLoading = true;
-    (await this.footballService.listarPaises()).subscribe({
+    this.footballService.listarPaises().subscribe({
       next: (paises) => {
         if (paises.constructor.name != 'IMessage') this.listaPaises = paises;
         else this.msg = 'Erro na API Football. Tente novamente mais tarde!';
@@ -54,7 +54,7 @@ export class HomeComponent {
     });
   }
 
-  async obterListaDeLigas() {
+  obterListaDeLigas() {
     this.camposPreenchidos = false;
     this.isLoading = true;
 
@@ -63,7 +63,7 @@ export class HomeComponent {
     if (pais != null && pais != '#') {
       this.desabilitarCampos('temporada', 'time');
       this.isLoading = true;
-      (await this.footballService.listarLigas(pais)).subscribe({
+      this.footballService.listarLigas(pais).subscribe({
         next: (ligas) => {
           if (ligas.constructor.name != 'IMessage') {
             this.habilitarCampos('liga');
@@ -79,7 +79,7 @@ export class HomeComponent {
     }
   }
 
-  async obterListaDeTimes() {
+  obterListaDeTimes() {
     this.camposPreenchidos = false;
     this.isLoading = true;
 
@@ -87,9 +87,7 @@ export class HomeComponent {
     let ligaId = this.formulario.get('liga')?.value;
 
     if (temporada != null) {
-      (
-        await this.footballService.listarTimesDaLiga(ligaId, temporada)
-      ).subscribe({
+      this.footballService.listarTimesDaLiga(ligaId, temporada).subscribe({
         next: (times) => {
           if (times.constructor.name != 'IMessage') {
             this.habilitarCampos('time');
@@ -105,31 +103,27 @@ export class HomeComponent {
     }
   }
 
-  async onSubmit() {
+  onSubmit() {
     this.isLoading = true;
 
     let timeId = this.formulario.get('time')?.value;
     let ligaId = this.formulario.get('liga')?.value;
     let temporada = this.formulario.get('temporada')?.value;
 
-    (
-      await this.footballService.listarEstatiticasDoTime(
-        ligaId,
-        temporada,
-        timeId
-      )
-    ).subscribe({
-      next: (time) => {
-        if (time.constructor.name != 'IMessage') {
-          this.estatisticasTime = time;
-        } else this.msg = 'Erro na API Football. Tente novamente mais tarde!';
-      },
-      error: (err) => {
-        console.log(err);
-        this.msg = 'Erro na aplicação. Tente novamente mais tarde!';
-      },
-      complete: () => (this.isLoading = false),
-    });
+    this.footballService
+      .listarEstatiticasDoTime(ligaId, temporada, timeId)
+      .subscribe({
+        next: (time) => {
+          if (time.constructor.name != 'IMessage') {
+            this.estatisticasTime = time;
+          } else this.msg = 'Erro na API Football. Tente novamente mais tarde!';
+        },
+        error: (err) => {
+          console.log(err);
+          this.msg = 'Erro na aplicação. Tente novamente mais tarde!';
+        },
+        complete: () => (this.isLoading = false),
+      });
   }
 
   listarTemporadas() {

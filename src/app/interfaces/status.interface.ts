@@ -2,7 +2,7 @@ import { IResponseApi } from './response.interface';
 
 export interface IStatusResponse extends IResponseApi {
   response?: {
-    account: {
+    account?: {
       firstname: string;
       lastname: string;
       email: string;
@@ -12,7 +12,7 @@ export interface IStatusResponse extends IResponseApi {
       end: string;
       active: boolean;
     };
-    requests: {
+    requests?: {
       current: number;
       limit_day: number;
     };
