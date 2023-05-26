@@ -17,8 +17,8 @@ import { CardComponent } from './card/card.component';
     FooterComponent,
     GraficoComponent,
     LoadingComponent,
+    CardComponent,
     MessageComponent,
-    CardComponent
   ],
   imports: [
     CommonModule,
@@ -31,8 +31,8 @@ import { CardComponent } from './card/card.component';
     FooterComponent,
     GraficoComponent,
     LoadingComponent,
+    CardComponent,
     MessageComponent,
-    CardComponent
   ]
 })
 export class ComponentsModule { }

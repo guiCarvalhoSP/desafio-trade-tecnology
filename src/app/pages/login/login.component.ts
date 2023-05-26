@@ -49,10 +49,10 @@ export class LoginComponent implements OnDestroy{
     this.event.unsubscribe();
   }
 
-  async onSubmit() {
+  onSubmit() {
     let key = this.formulario.get('key').value;
     this.isLoading = true;
-    await this.loginService.login(key, this.event)
+    this.loginService.login(key, this.event);
   }
 
   get key(): any {
