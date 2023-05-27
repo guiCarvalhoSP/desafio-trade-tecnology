@@ -54,7 +54,7 @@ describe('LoginComponent', () => {
 
   it('Componente deve ter um input key, para se colocar a key da api', () => {
     expect(component.formulario.contains('key')).toBeTrue();
-  })
+  });
 
   it('Ao submeter o formulario válido, deve chamar o método de fazer login do LoginService', () => {
     component.formulario.get('key')?.setValue('key');
