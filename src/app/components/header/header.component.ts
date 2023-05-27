@@ -22,7 +22,7 @@ export class HeaderComponent implements OnInit{
   ngOnInit() {
     this.router.events.subscribe((data) => {
       if(data instanceof NavigationEnd) {
-        if(data.url != '/login') this.isLogado = true;
+        if(data.url != '/login' && data.url == '/') this.isLogado = true;
          else this.isLogado = false;
       }
     });
