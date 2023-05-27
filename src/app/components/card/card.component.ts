@@ -45,7 +45,7 @@ export class CardComponent implements OnInit {
     );
   }
 
-  async buscaListaDeJogadores() {
+  buscaListaDeJogadores() {
     this.isLoading = true;
 
     let timeId = this.estatisticasTime.response.team.id;
