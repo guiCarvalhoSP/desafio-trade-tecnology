@@ -50,9 +50,13 @@ export class LoginComponent implements OnDestroy{
   }
 
   onSubmit() {
-    let key = this.formulario.get('key').value;
-    this.isLoading = true;
-    this.loginService.login(key, this.event);
+    if(this.formulario.valid){
+      let key = this.formulario.get('key').value;
+      this.isLoading = true;
+      this.loginService.login(key, this.event);
+    } else {
+      this.msg = 'Erro ao fazer login. Digite uma key válida';
+    }
   }
 
   get key(): any {
