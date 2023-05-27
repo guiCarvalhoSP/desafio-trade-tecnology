@@ -72,7 +72,7 @@ interface IResultsGames {
 }
 
 interface IPercentages {
-  total?: number | null;
+  total: number | null;
   percentage?: string | null;
 }
 
